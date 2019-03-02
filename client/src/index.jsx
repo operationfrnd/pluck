@@ -85,13 +85,13 @@ class App extends React.Component {
     })
       .then((res) => {
         console.log(res.data, 'RES DATA');
-        // get all plants in new users zipcode
+        // get all plants in new users zipcodes
         this.zipCodeSubmit({ zipcode });
       })
       .catch((err) => { console.log(err); });
   }
 
-  // called in UserLogin to allow user to log in when submit is pressed
+  // called in UserLogin to allow users to log in when submit is pressed
   userLogin(userInfo) {
     // grab username and add to state
     this.setState({

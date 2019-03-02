@@ -108,6 +108,7 @@ class PlantProfile extends React.Component {
     this.fileSelectHandler = this.fileSelectHandler.bind(this);
     this.submitPlant = this.submitPlant.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.console = this.console.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.setState = this.setState.bind(this);
     // this.fileUploadHandler = this.fileUploadHandler.bind(this);
@@ -117,7 +118,7 @@ class PlantProfile extends React.Component {
   // function that sets state via onchange
   // allows us to grab the plant type and description
   onChange(event) {
-    // find out if descrip field is being used
+    // find out if descrip field is being used ///
     console.log(event.target.id);
     if (event.target.id === 'description') {
       this.setState({
@@ -131,11 +132,20 @@ class PlantProfile extends React.Component {
       this.setState({
         plantZipcode: event.target.value,
       });
-    } else if (event.target.id === 'plantName') {
+    } else if (event.target.id === 'plantName' || event.target.id === 'downshift-0-input' || _.includes(event.target.id, 'downshift-0-item-')) {
+      if (_.includes(event.target.id, 'downshift-0-item-')) {
+        return this.setState({
+          plantName: event.target.innerText,
+        });
+      }
       this.setState({
         plantName: event.target.value,
       });
     }
+  }
+
+  console() {
+    console.log(true);
   }
 
   // get req to server to grab correct image based on selected type
@@ -203,7 +213,7 @@ class PlantProfile extends React.Component {
   //     .catch((err) => { console.log(err); });
   // }
 
-  ////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
 
   // function when submit button is pressed
@@ -226,7 +236,7 @@ class PlantProfile extends React.Component {
       url: '/plant/user',
       data: {
         username: this.state.username,
-        currency: this.state.currency,
+        currency: this.state.plantName,
         address: this.state.plantAddress,
         zipcode: this.state.plantZipcode,
         description: this.state.description,
@@ -251,10 +261,10 @@ class PlantProfile extends React.Component {
       return <Redirect to={{ pathname: '/myProfile' }} />;
     }
 
-
+    console.log(this.state.plantName);
     return (
       <div className="zip-body">
-        <form className={classes.container} noValidate autoComplete="off">
+        <form className={classes.container} noValidate autoComplete="on">
           {/* <Typeahead className={classes.textField} options={currencyNames} maxVisible={7} /> */}
           <Downshift
             itemToString={item => (item ? item.value : '')}
@@ -269,32 +279,33 @@ class PlantProfile extends React.Component {
               highlightedIndex,
               selectedItem,
             }) => (
-                <div>
-                  <TextField id="plantName" label="Plant Name" className={classes.textField} margin="normal" variant="standard" onChange={this.onChange} SelectProps={{ MenuProps: { className: classes.menu } }} {...getInputProps()} />
-                  <div className="dropdown-holder" {...getMenuProps()}>
-                    {isOpen
-                      ? currencies
-                        .filter(item => !inputValue || item.value.toLowerCase().includes(inputValue.toLowerCase()))
-                        .map((item, index) => (
-                          <div className="dropdown-item"
-                            {...getItemProps({
-                              key: item.value,
-                              index,
-                              item,
-                              style: {
-                                backgroundColor:
-                                  highlightedIndex === index ? 'lightgray' : 'white',
-                                fontWeight: selectedItem === item ? 'bold' : 'normal',
-                              },
-                            })}
-                          >
-                            {item.value}
-                          </div>
-                        ))
-                      : null}
-                  </div>
+              <div>
+                <TextField id="plantName" label="Plant Name" className={classes.textField} margin="normal" variant="standard" onInput={this.onChange} SelectProps={{ MenuProps: { className: classes.menu } }} {...getInputProps()} />
+                <div className="dropdown-holder" {...getMenuProps()} onClick={this.onChange}>
+                  {isOpen
+                    ? currencies
+                      .filter(item => !inputValue || item.value.toLowerCase().includes(inputValue.toLowerCase()))
+                      .map((item, index) => (
+                        <div
+                          className="dropdown-item"
+                          {...getItemProps({
+                            key: item.value,
+                            index,
+                            item,
+                            style: {
+                              backgroundColor:
+                                highlightedIndex === index ? 'lightgray' : 'white',
+                              fontWeight: selectedItem === item ? 'bold' : 'normal',
+                            },
+                          })}
+                        >
+                          {item.value}
+                        </div>
+                      ))
+                    : null}
                 </div>
-              )}
+              </div>
+            )}
           </Downshift>
         </form>
         <form className={classes.container} noValidate autoComplete="off">
