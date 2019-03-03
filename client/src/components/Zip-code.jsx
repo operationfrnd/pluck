@@ -51,7 +51,7 @@ class ComposedTextField extends React.Component {
   enterZipCode() {
     const { zipcode } = this.state;
     this.props.onSubmit({ zipcode });
-
+    console.log(zipcode);
     // brought to list view
     // set state of 'redirect' to true --> setstate is async aka needs settimeout (theres def a better way to do this)
     setTimeout(() => {

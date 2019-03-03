@@ -64,6 +64,7 @@ const possibleFinalGardenArray = {
   Pears: 'https://i.imgur.com/QFH6lVZh.jpg',
   Watermelons: 'https://i.imgur.com/uFOK2HN.jpg',
   Zucchini: 'https://i.imgur.com/pNHF6S6h.jpg',
+  Tomatoes: 'https://i.imgur.com/GXxgXWa.jpg',
 };
 
 // _.forEach(possibleFinalGardenArray, (link, planttype) => {

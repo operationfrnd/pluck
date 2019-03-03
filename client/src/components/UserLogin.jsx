@@ -55,7 +55,7 @@ class UserLogin extends React.Component {
     }
   }
 
-  // function that sends get req to server to retrieve user info
+  // function that sends get req to server to retrieve user info //
   submitUserInfo() {
     const { username, password } = this.state;
     this.props.onSubmit({ username, password }); // function from index.jsx --> gets plants from users zip

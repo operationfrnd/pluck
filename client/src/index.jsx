@@ -57,6 +57,7 @@ class App extends React.Component {
   // function gets called when submit button is clicked in zipcode view
   zipCodeSubmit(userZip) {
     // get req to server
+    console.log(userZip);
     axios.get(`/zipcode?zipcode=${userZip.zipcode}`)
     // server will grab plants in this zipcode from db and send back
       .then((res) => {
@@ -160,7 +161,7 @@ class App extends React.Component {
             <Switch>
               <Route path="/" render={() => <ZipCode onSubmit={this.zipCodeSubmit} />} exact />
               <Route path="/userProfile" render={() => <UserProfile plants={this.state.plants} onSubmit={this.submitUserInfo} />} />
-              <Route path="/plantList" render={() => <PlantList plants={this.state.plants} />} />              <Route path="/plantList" component={MapViewContainer} />
+              <Route path="/plantList" render={() => <PlantList plants={this.state.plants} userId={this.state.userId} />} />              <Route path="/plantList" component={MapViewContainer} />
               <Route path="/userLogin" render={() => <UserLogin plants={this.state.plants} zipcode={this.state.zipcode} onSubmit={this.userLogin} />} />
               <Route path="viewPlantProfile" render={() => <ViewPlantProfile userId={this.state.userId} />} />
               <Route path="/submitPlant" render={() => <CreatePlantProfile userId={this.state.userId} username={this.state.username} getAllPlants={this.getAllPlants} />} />

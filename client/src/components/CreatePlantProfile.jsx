@@ -108,7 +108,6 @@ class PlantProfile extends React.Component {
     this.fileSelectHandler = this.fileSelectHandler.bind(this);
     this.submitPlant = this.submitPlant.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.console = this.console.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.setState = this.setState.bind(this);
     // this.fileUploadHandler = this.fileUploadHandler.bind(this);
@@ -132,8 +131,8 @@ class PlantProfile extends React.Component {
       this.setState({
         plantZipcode: event.target.value,
       });
-    } else if (event.target.id === 'plantName' || event.target.id === 'downshift-0-input' || _.includes(event.target.id, 'downshift-0-item-')) {
-      if (_.includes(event.target.id, 'downshift-0-item-')) {
+    } else if (event.target.id === 'plantName' || event.target.id === 'downshift-0-input' || _.includes(event.target.id, 'downshift')) {
+      if (_.includes(event.target.id, 'downshift') && _.includes(event.target.id, 'item')) {
         return this.setState({
           plantName: event.target.innerText,
         });
@@ -141,11 +140,12 @@ class PlantProfile extends React.Component {
       this.setState({
         plantName: event.target.value,
       });
+    } else if (event.target.id === 'downshift-1-input') {
+      console.log(event.target);
+      return this.setState({
+        plantName: event.target.innerText,
+      });
     }
-  }
-
-  console() {
-    console.log(true);
   }
 
   // get req to server to grab correct image based on selected type
@@ -248,12 +248,7 @@ class PlantProfile extends React.Component {
       })
       .catch((err) => { console.log(err); });
 
-    // set state is async so needs a second to load
-    setTimeout(() => {
-      this.setState({
-        redirect: true,
-      });
-    }, 1000);
+    // set state is async so needs a second to load //
   }
 
   render() {

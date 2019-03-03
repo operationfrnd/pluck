@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -33,7 +35,21 @@ class PlantList extends React.Component {
     super(props);
     this.state = {
       data: props.plants, // list of plants in a specific zip
+      favorites: [],
     };
+  }
+
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url: `/user/favorites?iduser=${this.props.userId}`,
+    }).then((result) => {
+      this.setState({
+        favorites: result.data,
+      });
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   // Pass down to ViewPlantProfile to render grid
@@ -41,7 +57,7 @@ class PlantList extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {this.state.data.map(plant => <ViewPlantProfile plant={plant} key={plant.id} />)
+        {this.state.data.map(plant => <ViewPlantProfile userId={this.props.userId} plant={plant} key={plant.id} liked={_.includes(_.map(this.state.favorites, favorite => favorite.id), plant.id)} favorites={this.state.favorites} />)
       }
       </div>
     );

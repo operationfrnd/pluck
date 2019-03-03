@@ -19,6 +19,8 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import _ from 'lodash';
+
 // import Comments from './Comments.jsx';
 import {
   Dialog, DialogActions, DialogContent, DialogContentText,
@@ -85,6 +87,13 @@ class ViewPlantProfile extends React.Component {
     this.commentToggle = this.commentToggle.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      liked: this.props.liked,
+    });
+  }
+
+
   // doesnt work
   getDirections() {
     console.log('lets get directions');
@@ -92,6 +101,7 @@ class ViewPlantProfile extends React.Component {
     //   need enpoint from api
     //   should send address of plant
   }
+
 
   // gets location of current user https://www.w3schools.com/html/html5_geolocation.asp
   // need to find a way to get cordinates/location in Mapview.
@@ -106,6 +116,7 @@ class ViewPlantProfile extends React.Component {
 
   // THIS IS CLOSE TO WORKING BUT NOT QUITE FUNCTIONAL
   favoriteButton() {
+    console.log(this.state);
     console.log('favorite button clicked');
     // const { userId } = this.state;
     // const { plantId } = this.props;
@@ -115,19 +126,18 @@ class ViewPlantProfile extends React.Component {
     // post request to server
     //  add plant to users favs
     //  send user id + plant id
-    // axios.put('/user/favorite', { userId, plantId })
+    // axios.put('/user/favorite', { userId, plantId }) //
     axios({
       method: 'put',
       url: '/likes',
       data: {
-        iduser: '1' || this.state.userId,
+        iduser: this.state.userId,
         idplant: plantId || '1',
       },
     })
       .then((res) => { console.log(res); })
       .catch((err) => { console.log(err); });
   }
-
 
   showPosition(position) {
     // x.innerHTML = 'Latitude: ' + position.coords.latitude +
@@ -159,7 +169,7 @@ class ViewPlantProfile extends React.Component {
 
   render() {
     const { classes, plant } = this.props;
-
+    console.log(this);
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -185,6 +195,7 @@ class ViewPlantProfile extends React.Component {
               <Checkbox
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite />}
+                checked={this.state.liked}
                 value="checkedH"
                 onClick={this.favoriteButton}
               />
@@ -193,17 +204,17 @@ class ViewPlantProfile extends React.Component {
           />
           <NavLink to="/plantLocation" style={{ textDecoration: 'none' }}>
             <Button variant="contained" onClick={this.getLocation} className={classes.button}>
-                Get Directions
+              Get Directions
             </Button>
           </NavLink>
           {/* <div onClick={() => {this.commentToggle()}} >
             <i class="far fa-comment-alt"></i>
             {/* <span style="font-size: 48px; color: Dodgerblue;"> */}
-            {/* <span fontSize="48px" color="Dodgerblue">
+          {/* <span fontSize="48px" color="Dodgerblue">
               <i class="far fa-comment-alt"></i>
             </span>
             <input type="image" src={logo} width="7%" height="auto" onClick={() => this.changeView('search')} />
-          </div> */} 
+          </div> */}
           {/* <IconButton aria-label="Add to favorites" onClick={this.favoriteButton}>
             
           </IconButton> */}

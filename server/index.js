@@ -92,7 +92,19 @@ app.post('/plant/user', (req, res) => {
           res.status(500).send('Something went wrong while saving plant to the database');
         } else {
           // send back the newly created plant
-          res.status(200).send(data);
+          dbHelpers.insertComment(user.id, data.id, 'Tell other Pluckers about this Pluck!', (err3) => {
+            if (err3) {
+              res.status(500).send('Something went wrong while saving plant comment to the database');
+            } else {
+              dbHelpers.selectSinglePlant(data.id, (err4, plant) => {
+                if (err4) {
+                  res.status(500).send('Something went wrong while saving plant comment to the database');
+                } else {
+                  res.status(200).send(plant);
+                }
+              });
+            }
+          });
         }
       });
     }
@@ -284,6 +296,16 @@ app.post('/comments', (req, res) => {
       res.status(200).send(comment);
     }
   });
+});
+
+app.get('/user/favorites', (req, res) => {
+  dbHelpers.selectAllUsersLikes(req.query.iduser, (err, favorites) => {
+    if (err) {
+      res.status(500).send('We tried');
+    } else {
+      res.status(200).send(favorites);
+    }
+  })
 });
 
 app.get('/plant/comments', (req, res) => {
