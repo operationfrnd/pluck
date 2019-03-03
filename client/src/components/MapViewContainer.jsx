@@ -1,6 +1,24 @@
 import React from 'react';
 import axios from 'axios';
 import MapView from './MapView.jsx';
+import PlantBar from './PlantBar.jsx';
+
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+});
 
 class MapViewContainer extends React.Component {
   constructor(props) {
@@ -65,19 +83,39 @@ class MapViewContainer extends React.Component {
   }
 
   render() {
-    const style = { width: 600, height: 500, marginLeft: 'auto', marginRight: 'auto' };
+    // const style = { width: 600, height: 500, marginLeft: 'auto', marginRight: 'auto' };
+    const style = { marginTop: '50px', marginLeft: 'auto', marginRight: 'auto' };
     const { viewport } = this.state;
+    const { classes } = this.props;
     return (
-      <div>
-        <div>Hello World</div><br />
-        <div
-          // id="map"
-          // style={style}
-        />
-        <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
+      <div className={classes.root} style={style}>
+        <Grid container spacing={24}>
+          <Grid item xs>
+            {/* <Paper className={classes.paper}>xs</Paper> */}
+            <PlantBar allPlants={this.props.allPlants} />
+          </Grid>
+          <Grid item xs>
+            {/* <Paper className={classes.paper}>xs</Paper> */}
+            <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
+          </Grid>
+        </Grid>
       </div>
+      // <div>
+      //   <div>Hello World</div><br />
+      //   <div
+      //     // id="map"
+      //     // style={style}
+      //   />
+      //   <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
+      // </div>
     );
   }
 }
 
-export default MapViewContainer;
+MapViewContainer.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(MapViewContainer);
+
+// export default MapViewContainer;
