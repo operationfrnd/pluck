@@ -69,11 +69,12 @@ class MapViewContainer extends React.Component {
     const { viewport } = this.state;
     return (
       <div>
+        <div>Hello World</div><br />
         <div
-          id="map"
-          style={style}
+          // id="map"
+          // style={style}
         />
-        <MapView viewport={viewport} onViewportChange={this.onViewportChange} />
+        <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
       </div>
     );
   }

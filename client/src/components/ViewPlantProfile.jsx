@@ -19,6 +19,7 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+// import Comments from './Comments.jsx';
 import {
   Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle, FormGroup, FormControlLabel, Snackbar,
@@ -76,10 +77,12 @@ class ViewPlantProfile extends React.Component {
     this.state = {
       userId: props.userId,
       liked: false,
+      comments: [],
     };
     this.favoriteButton = this.favoriteButton.bind(this);
     this.getDirections = this.getDirections.bind(this);
     this.getLocation = this.getLocation.bind(this);
+    this.commentToggle = this.commentToggle.bind(this);
   }
 
   // doesnt work
@@ -134,6 +137,26 @@ class ViewPlantProfile extends React.Component {
   // `Latitude: ${position.coords.latitude}
   // Longitude: ${position.coords.longitude}`;
 
+  commentToggle() {
+    console.log('commentToggle clicked');
+    console.log(plant.id);
+    // axios({
+    //   method: 'get',
+    //   url: '/plant/comments',
+    //   data: {
+    //     idplant: plantId || '1',
+    //   },
+    // })
+    //   .then((res) => {
+    //     console.log(res, 'returning comments');
+    //     this.setState({
+    //       comments: res.data, // check if retriving correct part of data
+    //     });
+    //     return <Comments comments={this.state.comments} />;
+    //   })
+    //   .catch((err) => { console.log(err, 'cannot get comments'); });
+  }
+
   render() {
     const { classes, plant } = this.props;
 
@@ -154,9 +177,9 @@ class ViewPlantProfile extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites" onClick={this.favoriteButton}>
+          {/* <IconButton aria-label="Add to favorites" onClick={this.favoriteButton}>
             <FavoriteIcon />
-          </IconButton>
+          </IconButton> */}
           <FormControlLabel
             control={(
               <Checkbox
@@ -173,7 +196,14 @@ class ViewPlantProfile extends React.Component {
                 Get Directions
             </Button>
           </NavLink>
-          
+          {/* <div onClick={() => {this.commentToggle()}} >
+            <i class="far fa-comment-alt"></i>
+            {/* <span style="font-size: 48px; color: Dodgerblue;"> */}
+            {/* <span fontSize="48px" color="Dodgerblue">
+              <i class="far fa-comment-alt"></i>
+            </span>
+            <input type="image" src={logo} width="7%" height="auto" onClick={() => this.changeView('search')} />
+          </div> */} 
           {/* <IconButton aria-label="Add to favorites" onClick={this.favoriteButton}>
             
           </IconButton> */}

@@ -242,7 +242,10 @@ class PlantProfile extends React.Component {
         description: this.state.description,
       },
     })
-      .then((res) => { console.log(res); })
+      .then((res) => { 
+        this.props.getAllPlants();
+        console.log(res);
+      })
       .catch((err) => { console.log(err); });
 
     // set state is async so needs a second to load

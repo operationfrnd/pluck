@@ -84,7 +84,7 @@ class UserLogin extends React.Component {
     const { classes } = this.props;
 
     if (this.state.redirect === true && this.state.loggedIn === true) {
-      return <Redirect to="/plantList" />;
+      return <Redirect to="/plantLocation" />;
     }
 
     return (

@@ -26,15 +26,18 @@ class App extends React.Component {
       zipcode: '',
       userId: '',
       userPlants: [],
+      allPlants: [],
     };
 
     // bind to this all functions being handed down
     this.zipCodeSubmit = this.zipCodeSubmit.bind(this);
     this.userLogin = this.userLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getAllPlants = this.getAllPlants.bind(this);
   }
 
   componentDidMount() {
+    // this.getAllPlants();
     this.forceUpdate(); // rerenders page when components state or props change
   }
 
@@ -85,13 +88,13 @@ class App extends React.Component {
     })
       .then((res) => {
         console.log(res.data, 'RES DATA');
-        // get all plants in new users zipcodes
+        // get all plants in new users zipcode
         this.zipCodeSubmit({ zipcode });
       })
       .catch((err) => { console.log(err); });
   }
 
-  // called in UserLogin to allow users to log in when submit is pressed
+  // called in UserLogin to allow user to log in when submit is pressed
   userLogin(userInfo) {
     // grab username and add to state
     this.setState({
@@ -117,9 +120,27 @@ class App extends React.Component {
         });
 
         // get all plants in new users zipcode
+        this.getAllPlants();
         this.zipCodeSubmit({ zipcode: this.state.zipcode });
       })
       .catch((err) => { console.log(err); });
+  }
+
+  getAllPlants() {
+    console.log('get all plants called');
+    axios({
+      method: 'get',
+      url: '/toggledonplants',
+    })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          allPlants: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err, 'could not retrieve all plants');
+      });
   }
 
   handleChange(name) {
@@ -139,12 +160,12 @@ class App extends React.Component {
             <Switch>
               <Route path="/" render={() => <ZipCode onSubmit={this.zipCodeSubmit} />} exact />
               <Route path="/userProfile" render={() => <UserProfile plants={this.state.plants} onSubmit={this.submitUserInfo} />} />
-              <Route path="/plantList" render={() => <PlantList plants={this.state.plants} />} />
+              <Route path="/plantList" render={() => <PlantList plants={this.state.plants} />} />              <Route path="/plantList" component={MapViewContainer} />
               <Route path="/userLogin" render={() => <UserLogin plants={this.state.plants} zipcode={this.state.zipcode} onSubmit={this.userLogin} />} />
               <Route path="viewPlantProfile" render={() => <ViewPlantProfile userId={this.state.userId} />} />
-              <Route path="/submitPlant" render={() => <CreatePlantProfile userId={this.state.userId} username={this.state.username} />} />
+              <Route path="/submitPlant" render={() => <CreatePlantProfile userId={this.state.userId} username={this.state.username} getAllPlants={this.getAllPlants} />} />
               <Route path="/myProfile" render={() => <MyProfile zipcode={this.state.zipcode} plants={this.state.userPlants} username={this.state.username} id={this.state.userId} handleChange={this.handleChange} />} />
-              <Route path="/plantLocation" component={MapViewContainer} />
+              <Route path="/plantLocation" render={() => <MapViewContainer allPlants={this.state.allPlants} />} />
 
               <Route component={Error} />
             </Switch>

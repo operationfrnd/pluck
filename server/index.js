@@ -28,7 +28,7 @@ app.get('/allplants', (req, res) => {
 app.get('/toggledonplants', (req, res) => {
   dbHelpers.selectAllToggledOnPlants((err, plants) => {
     if (err) {
-      res.status(500).send('Problem occured while reteiving plants');
+      res.status(500).send('Problem occured while retrieving plants');
     } else {
       res.status(200).send(plants);
     }

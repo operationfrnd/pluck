@@ -1,8 +1,10 @@
+.vscode/
 node_modules/
 bower_components/
 *.log
 build/
 client/dist/
+client/dist/bundle.js
 .env
 database/sensitive-data.js
 package-lock.json

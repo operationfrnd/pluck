@@ -59,6 +59,10 @@
   padding-left: 140px
 }
 
+.extendedIcon {
+  marginRight: theme.spacing.unit;
+}
+
 .ComposedTextField-container-125 {
   margin: auto;
   display: block;
