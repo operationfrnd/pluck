@@ -38,8 +38,10 @@ const styles = {
   fab: {
     margin: 0,
     bottom: 50,
-    left: 50,
+    right: 50,
     position: 'fixed',
+    backgroundColor: '#000000',
+    borderRadius: '50%',
   },
 };
 // variantIcon and styles1 for snackbar

@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
+import { Fab } from '@material-ui/core';
+import Favorite from '@material-ui/icons/Favorite';
 
 
 const styles = theme => ({
@@ -17,6 +20,13 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  fab: {
+    margin: 0,
+    bottom: 50,
+    right: 50,
+    position: 'fixed',
+    backgroundColor: '#000000',
   },
 });
 
@@ -31,7 +41,6 @@ class MapViewContainer extends React.Component {
         width: 500,
         height: 500,
       },
-      // popupInfo: null,
     };
     this.getAddress = this.getAddress.bind(this);
     this.onViewportChange = this.onViewportChange.bind(this);
@@ -99,6 +108,11 @@ class MapViewContainer extends React.Component {
             <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
           </Grid>
         </Grid>
+          <div>
+            <Fab component={Link} to="/submitPlant" color="primary" size="medium" variant="extended" aria-label="Add a Plant" className={classes.fab} styles={styles.fab}>
+          Add a Plant
+            </Fab>
+          </div>
       </div>
       // <div>
       //   <div>Hello World</div><br />
@@ -107,7 +121,7 @@ class MapViewContainer extends React.Component {
       //     // style={style}
       //   />
       //   <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
-      // </div>
+      // </div> 
     );
   }
 }

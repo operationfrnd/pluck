@@ -24,6 +24,19 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
   },
+  submitButtonDiv: {
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  submitButton: {
+    position: 'relative',
+    top: '50%',
+    left: '0%',
+  },
+  InputLabel: {
+
+  },
+
 });
 
 class ComposedTextField extends React.Component {
@@ -81,7 +94,7 @@ class ComposedTextField extends React.Component {
               }}
               htmlFor="component-outlined"
             >
-                Zip-code
+                Enter Zip-code
             </InputLabel>
             <OutlinedInput
               id="component-outlined"
