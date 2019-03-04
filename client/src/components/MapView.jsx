@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import MapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
+import MapGL, { Marker, Popup, NavigationControl, GeolocateControl } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
+
 import config from '../../../config';
 // import PlantPin from './plant-pin.jsx';
 // import PlantInfo from './plant-info.jsx';
@@ -28,7 +30,17 @@ export default class MapView extends Component {
     this.updateViewport = this.updateViewport.bind(this);
     this.renderCityMarker = this.renderCityMarker.bind(this);
     this.renderPopup = this.renderPopup.bind(this);
+  }
 
+  componentDidMount() {
+    this.map = this.mapRef.getMap();
+    this.map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+    }));
+    // debugger;
   }
 
   componentWillReceiveProps({ viewport: newViewPort }) {
@@ -63,13 +75,15 @@ export default class MapView extends Component {
     const { popupInfo } = this.state;
 
     return popupInfo && (
-      <Popup tipSize={5}
+      <Popup
+        tipSize={5}
         anchor="top"
         longitude={popupInfo.longitude}
         latitude={popupInfo.latitude}
         closeOnClick={false}
-        onClose={() => this.setState({ popupInfo: null })} 
+        onClose={() => this.setState({ popupInfo: null })}
       >
+
         <CityInfo info={popupInfo} />
       </Popup>
     );
@@ -81,20 +95,13 @@ export default class MapView extends Component {
     const { popupInfo, viewport } = this.state;
     const { allPlants } = this.props;
     return (
-      // {allPlants}
       <MapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/basic-v9"
         mapboxApiAccessToken={TOKEN}
         onViewportChange={this.updateViewport}
+        ref={((mapRef) => { this.mapRef = mapRef; })}
       >
-        {/* <GeolocateControl
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-          onViewportChange={this._updateViewport}
-        /> */}
-        {/* {CITIES.map(this.renderPlantMarker)} */}
-        {/* {CITIES.map(this.renderCityMarker)} */}
         {allPlants.map(this.renderCityMarker)}
 
         {this.renderPopup()}
