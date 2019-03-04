@@ -1,5 +1,27 @@
 const cities = [
   {
+    "id": 2,
+    "plant": "Apples",
+    "address": "4133 Banks St., New Orleans, LA",
+    "zipcode": 70115,
+    "description": "A New Plant",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": -90.1035,
+    "latitude": 29.973
+  },
+  {
+    "id": 6,
+    "plant": "Tomatoes",
+    "address": "222 Chartes Street",
+    "zipcode": 70117,
+    "description": "delicious",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": 115.853,
+    "latitude": -31.9349
+  },
+  {
     "id": 26,
     "plant": "Strawberries",
     "address": "6602 Bellaire Dr New Oreans, LA",
@@ -10,7 +32,7 @@ const cities = [
     "longitude": -90.1213,
     "latitude": 30.0125,
     "imagelink": "https://i.imgur.com/XbgKeGlh.jpg"
-  }, 
+  },
   {
     "id": 27,
     "plant": "Bananas",
@@ -22,7 +44,62 @@ const cities = [
     "longitude": -90.0479,
     "latitude": 29.9625,
     "imagelink": "https://i.imgur.com/XxL6baYh.jpg"
-  }
+  },
+  {
+    "id": 7,
+    "plant": "Tomatoes",
+    "address": "222 Chartes Street",
+    "zipcode": 70117,
+    "description": "delicious",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": 115.853,
+    "latitude": -31.9349
+  },
+  {
+    "id": 9,
+    "plant": "Parsnips",
+    "address": "812 Dante St",
+    "zipcode": 70118,
+    "description": "parsy",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": -90.1345,
+    "latitude": 29.9463
+  },
+  {
+    "id": 10,
+    "plant": "Elephant Fruit",
+    "address": "812 Dante St",
+    "zipcode": 70118,
+    "description": "don't eat the trunk",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": -90.1345,
+    "latitude": 29.9463
+  },
+  {
+    "id": 12,
+    "plant": "Apricots",
+    "address": "522 Montegut St",
+    "zipcode": 70117,
+    "description": "Great fruits",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": -90.0479,
+    "latitude": 29.9625
+  },
+  {
+    "id": 14,
+    "plant": "Apples",
+    "address": "6823 St Charles Ave, New Orleans, LA",
+    "zipcode": 70115,
+    "description": "A New Plant",
+    "toggled": 0,
+    "likes": 0,
+    "longitude": -90.1188,
+    "latitude": 29.9413
+  },
 ];
 export default cities;
 // ];

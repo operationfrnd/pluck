@@ -24,6 +24,7 @@ import {
   SnackbarContent, TextField, withStyles, Typography, Switch } from '@material-ui/core';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import UsersLikes from './UsersLikes.jsx';
 
 const styles = {
   root: {
@@ -81,12 +82,14 @@ class MyProfile extends React.Component {
       userId: this.props.id,
       checkedB: true, // for the toggle
       liked: true, // like button
+      likedPlants: props.likedPlants,
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.deleteButton = this.deleteButton.bind(this);
     this.handleLike = this.handleLike.bind(this); // like button
     this.handleToggle = this.handleToggle.bind(this); // checkbox for plant to be "on"
+    // this.getUsersLikes = this.getUsersLikes.bind(this);
   }
 
   // render username, zip, and user plants dynamically
@@ -102,6 +105,24 @@ class MyProfile extends React.Component {
       console.log(err);
     });
   }
+
+  // getUsersLikes() {
+  //   console.log('get likes', this.props.id, 'props', this.state.userId, 'state');
+  //   axios({
+  //     method: 'get',
+  //     url: '/user/favorites',
+  //     params: {
+  //       iduser: this.props.id,
+  //     },
+  //   }).then((likes) => {
+  //     console.log(likes);
+  //     this.setState({
+  //       userslikes: likes.data,
+  //     });
+  //   }).catch((err) => {
+  //     console.log(err, 'in getting likes');
+  //   });
+  // }
 
   // remove plant from your plants completely
   deleteButton(plantId) {
@@ -160,74 +181,80 @@ class MyProfile extends React.Component {
   // render username, zip, and user plants dynamically
   render() {
     const { classes, handleChange } = this.props;
+    const { likedPlants } = this.state;
     return (
-      <div className={classes.root}>
-        <div>
-          {/* <Fab color="primary" aria-label="Add a Plant" className={classes.fab}>
-          <NavigationIcon className={classes.extendedIcon}
-            <AddIcon onclick={this.submitPlant} />add plant
-          </Fab> */}
-          <Fab component={Link} to="/submitPlant" color="primary" size="medium" variant="extended" aria-label="Add a Plant" className={classes.fab} styles={styles.fab}>
-            {/* <NavigationIcon className={classes.extendedIcon} /> */}
-        Add a Plant
-            {/* <ContentAdd /> */}
-          </Fab>
-        </div>
-        <Typography
-          variant="h5"
-          gutterBottom
-          // align="center"
-        >
-          {this.state.username.toUpperCase()}
-        </Typography>
-        <div className={classes.root}>
+      <center>
 
+        <div className={classes.root}>
+          <div>
+            {/* <Fab color="primary" aria-label="Add a Plant" className={classes.fab}>
+            <NavigationIcon className={classes.extendedIcon}
+              <AddIcon onclick={this.submitPlant} />add plant
+            </Fab> */}
+            <Fab component={Link} to="/submitPlant" color="primary" size="medium" variant="extended" aria-label="Add a Plant" className={classes.fab} styles={styles.fab}>
+              {/* <NavigationIcon className={classes.extendedIcon} /> */}
+          Add a Plant
+              {/* <ContentAdd /> */}
+            </Fab>
+          </div>
           <Typography
-            variant="subtitle1"
+            variant="h5"
             gutterBottom
+            // align="center"
           >
-          Your Plants
+            Hello, {this.state.username.toUpperCase()}
           </Typography>
 
-          {this.state.userPlants === undefined ? null : this.state.userPlants.map((plant) => {
-            return (
-              <Card className={classes.card} key={plant.id}>
-                <CardHeader
-                  title={plant.title}
-                />
-                <CardMedia
-                  className={classes.media}
-                  image={plant.imagelink}
-                  title={plant.title}
-                />
-                <CardContent>
-                  <Typography component="p">
-                    {plant.address}, {plant.zipcode} <br />
-                    {plant.description}
-                  </Typography>
-                </CardContent>
-                <IconButton aria-label="delete this plant" onClick={() => {this.deleteButton(plant.id)}}>
-                  <DeleteOutlinedIcon className={classes.icon} />
-                </IconButton>
-                <FormControlLabel
-                  control={(
-                    <Checkbox
-                      icon={<CheckBoxIcon fontSize="small" />}
-                      checkedIcon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                      value="checkedI"
-                      onClick={() => {
-                        this.handleToggle(plant.id);
-                      }}
-                    />
-                  )}
-                  label="Ready for Plucking"
-                />
-              </Card>
-            );
-          })
-          }
+          <UsersLikes likedPlants={likedPlants} />
+
+          <div className={classes.root}>
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+            >
+            Your Plants
+            </Typography>
+
+            {this.state.userPlants === undefined ? null : this.state.userPlants.map((plant) => {
+              return (
+                <Card className={classes.card} key={plant.id}>
+                  <CardHeader
+                    title={plant.title}
+                  />
+                  <CardMedia
+                    className={classes.media}
+                    image={plant.imagelink}
+                    title={plant.title}
+                  />
+                  <CardContent>
+                    <Typography component="p">
+                      {plant.address}, {plant.zipcode} <br />
+                      {plant.description}
+                    </Typography>
+                  </CardContent>
+                  <IconButton aria-label="delete this plant" onClick={() => {this.deleteButton(plant.id)}}>
+                    <DeleteOutlinedIcon className={classes.icon} />
+                  </IconButton>
+                  <FormControlLabel
+                    control={(
+                      <Checkbox
+                        icon={<CheckBoxIcon fontSize="small" />}
+                        checkedIcon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                        value="checkedI"
+                        onClick={() => {
+                          this.handleToggle(plant.id);
+                        }}
+                      />
+                    )}
+                    label="Ready for Plucking"
+                  />
+                </Card>
+              );
+            })
+            }
+          </div>
         </div>
-      </div>
+      </center>
     );
   }
 }

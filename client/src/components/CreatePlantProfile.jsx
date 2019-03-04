@@ -103,6 +103,7 @@ class PlantProfile extends React.Component {
       plantAddress: '',
       plantZipcode: '',
       plantName: '',
+      redirect: false,
     };
     this.getPlantType = this.getPlantType.bind(this);
     this.fileSelectHandler = this.fileSelectHandler.bind(this);
@@ -243,8 +244,12 @@ class PlantProfile extends React.Component {
       },
     })
       .then((res) => { 
+        this.setState({
+          redirect: true,
+        });
         this.props.getAllPlants();
         console.log(res);
+        // return <Redirect to={{ pathname: '/myProfile' }} />;
       })
       .catch((err) => { console.log(err); });
 
