@@ -35,7 +35,7 @@ class MapViewContainer extends React.Component {
     super(props);
     this.state = {
       viewport: {
-        zoom: 13,
+        zoom: 11,
         bearing: 0,
         pitch: 0,
         width: 500,
@@ -85,7 +85,7 @@ class MapViewContainer extends React.Component {
   getAddress() {
     axios.get('/health')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const plant = res.data;
         this.setState({ address: plant.address });
       });

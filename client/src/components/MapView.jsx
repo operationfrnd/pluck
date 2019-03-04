@@ -95,7 +95,6 @@ export default class MapView extends Component {
     const { popupInfo, viewport } = this.state;
     const { allPlants } = this.props;
     return (
-      // {allPlants}
       <MapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/basic-v9"
@@ -103,12 +102,6 @@ export default class MapView extends Component {
         onViewportChange={this.updateViewport}
         ref={((mapRef) => { this.mapRef = mapRef; })}
       >
-        {/* <GeolocateControl
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-          onViewportChange={this._updateViewport}
-        /> */}
-        {/* {CITIES.map(this.renderCityMarker)} */}
         {allPlants.map(this.renderCityMarker)}
 
         {this.renderPopup()}
