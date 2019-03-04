@@ -27,6 +27,7 @@ class App extends React.Component {
       userId: '',
       userPlants: [],
       allPlants: [],
+      userslikes: [], // users likes
     };
 
     // bind to this all functions being handed down
@@ -34,6 +35,7 @@ class App extends React.Component {
     this.userLogin = this.userLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getAllPlants = this.getAllPlants.bind(this);
+    this.getUsersLikes = this.getUsersLikes.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +54,24 @@ class App extends React.Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(displayLocationInfo);
     }
+  }
+
+  getUsersLikes() {
+    console.log('get likes', this.props.id, 'props', this.state.userId, 'state');
+    axios({
+      method: 'get',
+      url: '/user/favorites',
+      params: {
+        iduser: this.state.userId,
+      },
+    }).then((likes) => {
+      console.log(likes);
+      this.setState({
+        userslikes: likes.data,
+      });
+    }).catch((err) => {
+      console.log(err, ' error in getting likes');
+    });
   }
 
   // function gets called when submit button is clicked in zipcode view
@@ -91,6 +111,7 @@ class App extends React.Component {
         console.log(res.data, 'RES DATA');
         // get all plants in new users zipcode
         this.zipCodeSubmit({ zipcode });
+        this.getUsersLikes();
       })
       .catch((err) => { console.log(err); });
   }
@@ -122,6 +143,7 @@ class App extends React.Component {
 
         // get all plants in new users zipcode
         this.getAllPlants();
+        this.getUsersLikes();
         this.zipCodeSubmit({ zipcode: this.state.zipcode });
       })
       .catch((err) => { console.log(err); });
@@ -138,6 +160,7 @@ class App extends React.Component {
         this.setState({
           allPlants: res.data,
         });
+        // this.componentDidMount();
       })
       .catch((err) => {
         console.log(err, 'could not retrieve all plants');
@@ -163,9 +186,9 @@ class App extends React.Component {
               <Route path="/userProfile" render={() => <UserProfile plants={this.state.plants} onSubmit={this.submitUserInfo} />} />
               <Route path="/plantList" render={() => <PlantList plants={this.state.plants} userId={this.state.userId} />} />              <Route path="/plantList" component={MapViewContainer} />
               <Route path="/userLogin" render={() => <UserLogin plants={this.state.plants} zipcode={this.state.zipcode} onSubmit={this.userLogin} />} />
-              <Route path="viewPlantProfile" render={() => <ViewPlantProfile userId={this.state.userId} />} />
-              <Route path="/submitPlant" render={() => <CreatePlantProfile userId={this.state.userId} username={this.state.username} getAllPlants={this.getAllPlants} />} />
-              <Route path="/myProfile" render={() => <MyProfile zipcode={this.state.zipcode} plants={this.state.userPlants} username={this.state.username} id={this.state.userId} handleChange={this.handleChange} />} />
+              <Route path="viewPlantProfile" render={() => <ViewPlantProfile userId={this.state.userId} getLikes={this.getUsersLikes} />} />
+              <Route path="/submitPlant" render={() => <CreatePlantProfile userId={this.state.userId} username={this.state.username} getAllPlants={this.getAllPlants} getLikes={this.getUsersLikes} />} />
+              <Route path="/myProfile" render={() => <MyProfile zipcode={this.state.zipcode} plants={this.state.userPlants} username={this.state.username} id={this.state.userId} handleChange={this.handleChange} likedPlants={this.state.userslikes} />} />
               <Route path="/plantLocation" render={() => <MapViewContainer allPlants={this.state.allPlants} />} />
 
               <Route component={Error} />

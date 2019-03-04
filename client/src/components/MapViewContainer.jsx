@@ -119,9 +119,9 @@ class MapViewContainer extends React.Component {
       //   <div
       //     // id="map"
       //     // style={style}
-      //   />
+      //   /> /// 
       //   <MapView viewport={viewport} onViewportChange={this.onViewportChange} allPlants={this.props.allPlants} />
-      // </div> 
+      // </div>
     );
   }
 }
